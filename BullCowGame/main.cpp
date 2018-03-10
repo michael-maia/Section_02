@@ -1,15 +1,18 @@
 #include <iostream>
 #include <string>
+#include <ctype.h>
 
 //Function Prototype
 void PrintIntro();
 void PlayGame();
 void GetGuessAndPrintBack();
+bool AskToPlayAgain();
 
 //The entry point for our application
 int main() {
 	PrintIntro();	
 	PlayGame();
+	std::cout << AskToPlayAgain();
 	return 0;
 }
 
@@ -28,6 +31,13 @@ void GetGuessAndPrintBack() {
 	std::cout << "What's your guess: ";
 	getline(std::cin, Guess); //Read all the line before you press ENTER
 	std::cout << "Your guess was " << Guess << std::endl; //And print the guess back	
+}
+
+bool AskToPlayAgain(){
+	std::cout << "Do you want to play again? ";
+	std::string Response = "";
+	getline(std::cin,Response);
+	return (tolower(Response[0]) == 'y'); //Return with logical decision
 }
 
 void PlayGame()
