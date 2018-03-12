@@ -25,7 +25,6 @@ void PrintIntro() {
 	std::cout << "Can you guess the " << WORLD_LENGTH << " letter isogram I'm thinking of?\n";
 	return;
 }
-
 void GetGuessAndPrintBack() {
 	//Get a guess from the player
 	std::string Guess = "";
@@ -33,14 +32,12 @@ void GetGuessAndPrintBack() {
 	getline(std::cin, Guess); //Read all the line before you press ENTER
 	std::cout << "Your guess was " << Guess << std::endl; //And print the guess back	
 }
-
 bool AskToPlayAgain(){
 	std::cout << "Do you want to play again? (yes/no)";
 	std::string Response = "";
 	getline(std::cin,Response);
 	return (tolower(Response[0]) == 'y'); //Return with logical decision
 }
-
 void PlayGame()
 {
 	//Loop for the number of turns asking for guess
