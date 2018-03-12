@@ -1,4 +1,6 @@
 #pragma once //This makes the file to be imported only one time
+#include <string>
+
 
 class FBullCowGame {
 public:
@@ -6,11 +8,11 @@ public:
 	int GetMaxTries();
 	int GetCurrentTry();
 	bool IsGameWon();
-	bool CheckGuessValidity();
+	bool CheckGuessValidity(std::string);
 
 private:
-	int MyCurrentTry;
-	int MyMaxTries;
-	bool IsIsogram();
+	int MyCurrentTry = 1;
+	int MyMaxTries = 5;
+	bool IsIsogram;
 };
 
