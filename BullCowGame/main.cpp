@@ -1,19 +1,28 @@
+/* This is the console executable, that makes use of the BullCow class
+This acts as the view in a MVC pattern, and is responsible for all user interaction for game logic
+see the FBullCowGame class.*/
+
 #include <iostream>
 #include <string>
 #include <ctype.h>
 #include "FBullCowGame.h"
 
-//Function Prototype
+//Transforming into Unreal standards
+using FText = std::string; //FText => for user interaction
+using int32 = int;
+
+//Function prototypes
 void PrintIntro();
 void PlayGame();
-void GetGuess(int);
+void GetGuess(int32);
 bool AskToPlayAgain();
 
 FBullCowGame BCGame;
 
 //The entry point for our application
-int main() {
+int main() {	
 	do {
+		BCGame.Reset();
 		PrintIntro();
 		PlayGame();		
 	} while (AskToPlayAgain() == true);
@@ -22,33 +31,33 @@ int main() {
 
 //Functions
 void PrintIntro() {	
-	//Introduce the game
-	constexpr int WORLD_LENGTH = 9; //Constant variable
+	//introduce the game
+	constexpr int32 WORD_LENGTH = 9; //constant variable
 	std::cout << "Welcome to Bulls and Cows\n" << std::endl;
-	std::cout << "Can you guess the " << WORLD_LENGTH << " letter isogram I'm thinking of?\n";
+	std::cout << "Can you guess the " << WORD_LENGTH << " letter isogram I'm thinking of?\n";
 	return;
 }
-void GetGuess(int CurrentTry) {
-	//Get a guess from the player	
+void GetGuess(int32 CurrentTry) {
+	//get a guess from the player	
 	CurrentTry += BCGame.GetCurrentTry();
-	std::string Guess = "";
+	FText Guess = "";
 	std::cout << "Try " << CurrentTry << ". Enter your guess: ";
-	getline(std::cin, Guess); //Read all the line before you press ENTER
-	std::cout << "Your guess was " << Guess << std::endl; //And print the guess back	
+	getline(std::cin, Guess); //read all the line before you press ENTER
+	std::cout << "Your guess was " << Guess << std::endl; //and print the guess back	
 }
 void PlayGame()
 {	
-	int MaxTries = BCGame.GetMaxTries();	
-	//Loop for the number of turns asking for guess	
-	for (int i = 0; i < MaxTries; i++) {
+	int32 MaxTries = BCGame.GetMaxTries();	
+	//loop for the number of turns asking for guess	
+	for (int32 i = 0; i < MaxTries; i++) {
 		GetGuess(i);
 		std::cout << std::endl;
 	}
 }
 bool AskToPlayAgain() {
 	std::cout << "Do you want to play again? (yes/no): ";
-	std::string Response = "";
+	FText Response = "";
 	getline(std::cin, Response);
 	std::cout << std::endl;
-	return (tolower(Response[0]) == 'y'); //Return with logical decision
+	return (tolower(Response[0]) == 'y'); //return with logical decision
 }

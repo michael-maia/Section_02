@@ -1,19 +1,23 @@
 #pragma once //This makes the file to be imported only one time
 #include <string>
 
+using FString = std::string;
+using int32 = int;
 
 class FBullCowGame {
-public:	
-	int GetMaxTries() const;
-	int GetCurrentTry() const;
+public:		
+	FBullCowGame();
+	int32 GetMaxTries() const;
+	int32 GetCurrentTry() const;
 	bool IsGameWon() const;
 
 	void Reset();
-	bool CheckGuessValidity(std::string);
+	bool CheckGuessValidity(FString); //TODO with more details
 
 private:
-	int MyCurrentTry = 1;
-	int MyMaxTries = 5;
+	//Check constructor for inicialization
+	int32 MyCurrentTry;
+	int32 MyMaxTries;
 	bool IsIsogram;
 };
 
