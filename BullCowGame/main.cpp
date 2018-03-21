@@ -30,10 +30,9 @@ int main() {
 
 //Functions
 void PrintIntro() {	
-	//introduce the game
-	constexpr int32 WORD_LENGTH = 9; //constant variable
+	//introduce the game	
 	std::cout << "Welcome to Bulls and Cows\n" << std::endl;
-	std::cout << "Can you guess the " << WORD_LENGTH << " letter isogram I'm thinking of?\n";
+	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n";
 	return;
 }
 void GetGuess(int32 CurrentTry) {
