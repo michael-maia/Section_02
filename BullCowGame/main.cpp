@@ -14,7 +14,7 @@ using int32 = int;
 //Function prototypes
 void PrintIntro();
 void PlayGame();
-void GetGuess(int32);
+FText GetGuess(int32);
 bool AskToPlayAgain();
 
 FBullCowGame BCGame;
@@ -35,7 +35,7 @@ void PrintIntro() {
 	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n";
 	return;
 }
-void GetGuess(int32 CurrentTry) {
+FText GetGuess(int32 CurrentTry) {
 	//get a guess from the player	
 	CurrentTry += BCGame.GetCurrentTry();
 	FText Guess = "";	
@@ -44,15 +44,17 @@ void GetGuess(int32 CurrentTry) {
 	FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
 	std::cout << "Bulls = " << BullCowCount.Bulls;
 	std::cout << " | Cows = " << BullCowCount.Cows << std::endl;
-	std::cout << "Your guess was " << Guess << std::endl; //and print the guess back	
+	std::cout << "Your guess was " << Guess << std::endl; //and print the guess back
+	return Guess;
 }
 void PlayGame()
 {	
 	BCGame.Reset();
 	int32 MaxTries = BCGame.GetMaxTries();	
 	//loop for the number of turns asking for guess	
-	for (int32 i = 0; i < MaxTries; i++) {
-		GetGuess(i);
+	for (int32 count = 0; count < MaxTries; count++) {
+		FText Guess = GetGuess(count);	
+		EGuessStatus Status = BCGame.CheckGuessValidity(Guess);
 		std::cout << std::endl;		
 	}
 }

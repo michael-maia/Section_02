@@ -18,8 +18,16 @@ void FBullCowGame::Reset(){
 bool FBullCowGame::IsGameWon() const {
 	return false;
 }
-bool FBullCowGame::CheckGuessValidity(FString) const{
-	return false;
+EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const{
+	if (false) {
+		return EGuessStatus::Not_Isogram;
+	}
+	else if (Guess.length() != GetHiddenWordLength()) {
+		return EGuessStatus::Wrong_Length;
+	}
+	else {
+		return EGuessStatus::OK;
+	}
 }
 FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
 {	//MHChar = My Hidden Word Character | GChar = Guess Char
