@@ -22,11 +22,11 @@ public:
 	int32 GetCurrentTry() const;
 	int32 GetHiddenWordLength() const;
 	bool IsGameWon() const;
-	EGuessStatus CheckGuessValidity(FString) const; //TODO with more details
+	EGuessStatus CheckGuessValidity(FString) const; 
 	void Reset();		
 	FBullCowCount SubmitGuess(FString);
 
-private:
+private: //private parameters, DON'T manipulate it directly, use functions instead a.k.a GETTERS
 	//Check constructor for inicialization
 	int32 MyCurrentTry;
 	int32 MyMaxTries;
