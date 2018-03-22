@@ -38,7 +38,7 @@ Functions
 //introduce the game
 void PrintIntro() {		
 	std::cout << "Welcome to Bulls and Cows\n\n";
-	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n";
+	std::cout << "Can you guess the " << BCGame.GetHiddenWordLength() << " letter isogram I'm thinking of?\n\n\n";
 	return;
 }
 //main function for our BullsAndCows game
@@ -57,24 +57,30 @@ void PlayGame()
 	}
 }
 //this will loop continually until the user gives a valid guess
-FText GetValidGuess(int32 CurrentTry) {		
+FText GetValidGuess(int32 CurrentTry) {			
+	EGuessStatus Status = EGuessStatus::Invalid_Status; //initializing our status so we can use as a condition for our do-while loop
 	CurrentTry += BCGame.GetCurrentTry(); //this is to control what guess number is
+	do {
+		//get a guess from the player		
+		FText Guess = "";
+		std::cout << "Try " << CurrentTry << ". Enter your guess: ";
+		getline(std::cin, Guess); //this read all the line before press ENTER
 
-	FText Guess = "";	
-	std::cout << "Try " << CurrentTry << ". Enter your guess: ";
-	getline(std::cin, Guess); //this read all the line before press ENTER
-
-	//this will check user's guess and if's not OK will return an error message showing what's wrong
-	EGuessStatus Status = BCGame.CheckGuessValidity(Guess);
-	//error messages
-	switch (Status) {
-	case EGuessStatus::Wrong_Length:
-		std::cout << "Please enter a " << BCGame.GetHiddenWordLength() << " letter word.\n"; break;
-	default: //OK case
-		return Guess;
-	}	
+		//this will check user's guess and if's not OK will return an error message showing what's wrong
+		 Status = BCGame.CheckGuessValidity(Guess);
+		//error messages
+		switch (Status) {
+		case EGuessStatus::Wrong_Length:
+			std::cout << "Please enter a " << BCGame.GetHiddenWordLength() << " letter word.\n"; break;
+		case EGuessStatus::Not_Isogram:
+			std::cout << "Please enter a word without repeating any letters.\n"; break;
+		default: //OK case
+			return Guess; break;
+		}
+		std::cout << std::endl;
+	} while (Status != EGuessStatus::OK); //will keep looping until user's guess are OK by our definitions
 }
-//self explanatory, LOL
+//self explanatory, LOL!
 bool AskToPlayAgain() {
 	std::cout << "Do you want to play again? (yes/no): ";
 	FText Response = "";
