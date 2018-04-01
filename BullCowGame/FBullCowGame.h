@@ -25,7 +25,7 @@ public:
 	bool IsGameWon() const;
 	EGuessStatus CheckGuessValidity(FString) const; 
 	void Reset();		
-	FBullCowCount SubmitGuess(FString);
+	FBullCowCount SubmitValidGuess(FString);
 
 private: //private parameters, DON'T manipulate it directly, use functions instead a.k.a GETTERS
 	//Check constructor for inicialization

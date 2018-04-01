@@ -35,13 +35,14 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const{
 	}
 }
 //checking how many Bulls and Cows the user did
-FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
+FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 {	
-	FBullCowCount BullCowCount;
-	int32 HiddenWordLength = MyHiddenWord.length();
-	for(int32 MHWChar = 0; MHWChar < HiddenWordLength; MHWChar++) { //MHChar = My Hidden Word Character
-		for (int32 GChar = 0; GChar < HiddenWordLength; GChar++) { //GChar = Guess Char
-			if ((Guess[GChar]) == MyHiddenWord[MHWChar]) { //comparing the guess against our hidden word
+	FBullCowCount BullCowCount;	
+	int32 WordLength = MyHiddenWord.length(); //assuming same length as guess
+	for(int32 MHWChar = 0; MHWChar < WordLength; MHWChar++) { //MHChar = My Hidden Word Character
+		for (int32 GChar = 0; GChar < WordLength; GChar++) { //GChar = Guess Char
+			//comparing the guess against our hidden word
+			if ((Guess[GChar]) == MyHiddenWord[MHWChar]) { 
 				if (MHWChar == GChar) { //if the letters are in the same place
 					BullCowCount.Bulls++;
 				}
