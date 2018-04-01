@@ -44,7 +44,7 @@ void PrintIntro() {
 //main function for our BullsAndCows game
 void PlayGame()
 {
-	BCGame.Reset(); //resets the game everytime this function runs
+	BCGame.Reset(); //resets the game everytime this function runs	
 	int32 CurrentTry = BCGame.GetCurrentTry(); //initializing the Try number counter
 	int32 MaxTries = BCGame.GetMaxTries();	
 	//loop for the number of turns asking for guess	while the game is NOT won and there are still tries remaining
@@ -55,8 +55,9 @@ void PlayGame()
 		//user's output to check if its guess are close or not to our hidden word
 		std::cout << "Bulls = " << BullCowCount.Bulls;
 		std::cout << " | Cows = " << BullCowCount.Cows << std::endl;
-		std::cout << "Your guess was " << Guess << "\n\n";	
+		std::cout << "Your guess was " << Guess << "\n\n";
 		CurrentTry++; //if we reach this part, the guess will be valid and we can increase our counter
+		
 	}
 }
 //this will loop continually until the user gives a valid guess

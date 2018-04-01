@@ -21,7 +21,7 @@ public:
 	FBullCowGame();
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
-	int32 GetHiddenWordLength() const;
+	int32 GetHiddenWordLength() const;	
 	bool IsGameWon() const;
 	EGuessStatus CheckGuessValidity(FString) const; 
 	void Reset();		
@@ -33,5 +33,6 @@ private: //private parameters, DON'T manipulate it directly, use functions inste
 	int32 MyMaxTries;
 	bool IsIsogram;
 	FString MyHiddenWord;
+	bool bIsGameWon;
 };
 
