@@ -13,7 +13,7 @@ bool FBullCowGame::IsGameWon() const { return bIsGameWon; }
 
 //this will reset the game
 void FBullCowGame::Reset(){	
-	constexpr int32 MAX_TRIES = 8;
+	constexpr int32 MAX_TRIES = 2;
 	const FString HIDDEN_WORD = "planet";	
 	MyHiddenWord = HIDDEN_WORD; 
 	MyMaxTries = MAX_TRIES;
@@ -22,7 +22,6 @@ void FBullCowGame::Reset(){
 	return; 
 }
 //the game can only be beatable if bulls are equal to the number of letters in our hidden word
-
 //user's output to check if its guess are close or not to our hidden word
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const{
 	if (false) {
@@ -37,7 +36,7 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const{
 }
 //checking how many Bulls and Cows the user did
 FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
-{	
+{		
 	FBullCowCount BullCowCount;		
 	int32 WordLength = MyHiddenWord.length(); //assuming same length as guess
 	for(int32 MHWChar = 0; MHWChar < WordLength; MHWChar++) { //MHChar = My Hidden Word Character
@@ -59,5 +58,6 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 	else {
 		bIsGameWon = false;
 	}
+	MyCurrentTry++; //if the player's guess is valid, the try counter will increase
 	return BullCowCount;
 }

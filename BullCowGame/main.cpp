@@ -19,6 +19,7 @@ void PrintIntro();
 void PlayGame();
 FText GetValidGuess();
 bool AskToPlayAgain();
+void PrintGameSummary();
 
 FBullCowGame BCGame; //make this instance global to our code
 
@@ -44,21 +45,19 @@ void PrintIntro() {
 //main function for our BullsAndCows game
 void PlayGame()
 {
-	BCGame.Reset(); //resets the game everytime this function runs	
-	int32 CurrentTry = BCGame.GetCurrentTry(); //initializing the Try number counter
+	BCGame.Reset(); //resets the game everytime this function runs		
 	int32 MaxTries = BCGame.GetMaxTries();	
 	//loop for the number of turns asking for guess	while the game is NOT won and there are still tries remaining
-	while(!BCGame.IsGameWon() && BCGame.GetCurrentTry() <= MaxTries){
-		std::cout << "Try " << CurrentTry << std::endl;
+	do{
+		std::cout << "Try " << BCGame.GetCurrentTry() << std::endl;
 		FText Guess = GetValidGuess();
 		FBullCowCount BullCowCount = BCGame.SubmitValidGuess(Guess);
 		//user's output to check if its guess are close or not to our hidden word
 		std::cout << "Bulls = " << BullCowCount.Bulls;
 		std::cout << " | Cows = " << BullCowCount.Cows << std::endl;
-		std::cout << "Your guess was " << Guess << "\n\n";
-		CurrentTry++; //if we reach this part, the guess will be valid and we can increase our counter
-		
-	}
+		std::cout << "Your guess was " << Guess << "\n\n";			
+	}while (!BCGame.IsGameWon() && BCGame.GetCurrentTry() <= MaxTries);
+	PrintGameSummary();
 }
 //this will loop continually until the user gives a valid guess
 FText GetValidGuess() {			
@@ -85,9 +84,19 @@ FText GetValidGuess() {
 }
 //self explanatory, LOL!
 bool AskToPlayAgain() {
-	std::cout << "Do you want to play again? (yes/no): ";
+	std::cout << "Do you want to play again with the same hidden word? (yes/no): ";
 	FText Response = "";
 	getline(std::cin, Response);
 	std::cout << std::endl;
 	return (tolower(Response[0]) == 'y'); //return with logical decision
+}
+//win or lose message
+void PrintGameSummary() {
+	if (BCGame.IsGameWon()) {
+		std::cout << "Congratulations! You won the game!" << std::endl;
+	}
+	else{
+		std::cout << "Sorry, you lost the game!" << std::endl;
+	}
+	return;
 }
