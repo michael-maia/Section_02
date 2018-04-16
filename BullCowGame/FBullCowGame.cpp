@@ -1,4 +1,6 @@
 #include "FBullCowGame.h"
+#include <map>
+#define TMap std::map
 
 /*----------------------
 Constructor
@@ -24,7 +26,7 @@ void FBullCowGame::Reset(){
 //the game can only be beatable if bulls are equal to the number of letters in our hidden word
 //user's output to check if its guess are close or not to our hidden word
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const{
-	if (false) {
+	if (!IsIsogram(Guess)) { //we are checking for false results
 		return EGuessStatus::Not_Isogram;
 	}
 	else if (Guess.length() != GetHiddenWordLength()) {
@@ -60,4 +62,20 @@ FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 	}
 	MyCurrentTry++; //if the player's guess is valid, the try counter will increase
 	return BullCowCount;
+}
+bool FBullCowGame::IsIsogram(FString Word) const{
+	// treat 0 and 1 letter words as isograms
+	if (Word.length() <= 1) { return true; }
+	TMap<char, bool> LetterSeen; //setup our map
+	for (auto Letter : Word) 	// for all letters of the word
+	{
+		Letter = tolower(Letter); // handle mixed case
+		if (LetterSeen[Letter]) {// if the letter is in the map
+			return false; // we do NOT have an isogram			
+		}
+		else {
+			LetterSeen[Letter] = true; //add the letter to the map			
+		}
+	}
+	return true; // for example in cases where /0 is entered
 }

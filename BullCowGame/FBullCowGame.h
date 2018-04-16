@@ -30,9 +30,9 @@ public:
 private: //private parameters, DON'T manipulate it directly, use functions instead a.k.a GETTERS
 	//Check constructor for inicialization
 	int32 MyCurrentTry;
-	int32 MyMaxTries;
-	bool IsIsogram;
+	int32 MyMaxTries;	
 	FString MyHiddenWord;
 	bool bIsGameWon;
+	bool IsIsogram(FString) const;
 };
 

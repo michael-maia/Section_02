@@ -5,7 +5,9 @@ see the FBullCowGame class.*/
 #include <iostream>
 #include <string>
 #include <ctype.h>
+#include <map>
 #include "FBullCowGame.h"
+
 
 //Transforming into Unreal standards
 using FText = std::string; //for Unreal user interaction
