@@ -2,71 +2,84 @@
 #include <map>
 #define TMap std::map
 
-/*----------------------
-Constructor
-----------------------*/
+using int32 = int;
 
 FBullCowGame::FBullCowGame() { Reset(); }
 
 int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
-bool FBullCowGame::IsGameWon() const { return bIsGameWon; }
+bool FBullCowGame::IsGameWon() const { return bGameIsWon; }
 
-//this will reset the game
-void FBullCowGame::Reset(){	
-	constexpr int32 MAX_TRIES = 2;
-	const FString HIDDEN_WORD = "planet";	
-	MyHiddenWord = HIDDEN_WORD; 
+void FBullCowGame::Reset()
+{
+	constexpr int32 MAX_TRIES = 3;
+	const FString HIDDEN_WORD = "planet";
+
 	MyMaxTries = MAX_TRIES;
+	MyHiddenWord = HIDDEN_WORD;
 	MyCurrentTry = 1;
-	bIsGameWon = false;
-	return; 
+	bGameIsWon = false;
+	return;
 }
-//the game can only be beatable if bulls are equal to the number of letters in our hidden word
-//user's output to check if its guess are close or not to our hidden word
-EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const{
-	if (!IsIsogram(Guess)) { //we are checking for false results
+
+EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
+{
+	if (!IsIsogram(Guess)) // if the guess isn't an isogram
+	{
 		return EGuessStatus::Not_Isogram;
 	}
-	else if (Guess.length() != GetHiddenWordLength()) {
+	else if (false) // if the guess isn't all lowercase
+	{
+		return EGuessStatus::Not_Lowercase; // TODO write function
+	}
+	else if (Guess.length() != GetHiddenWordLength()) // if the guess length is wrong
+	{
 		return EGuessStatus::Wrong_Length;
 	}
-	else {
+	else
+	{
 		return EGuessStatus::OK;
 	}
 }
-//checking how many Bulls and Cows the user did
+
+// receives a VALID guess, incriments turn, and returns count
 FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
-{		
-	FBullCowCount BullCowCount;		
-	int32 WordLength = MyHiddenWord.length(); //assuming same length as guess
-	for(int32 MHWChar = 0; MHWChar < WordLength; MHWChar++) { //MHChar = My Hidden Word Character
-		for (int32 GChar = 0; GChar < WordLength; GChar++) { //GChar = Guess Char
-			//comparing the guess against our hidden word
-			if ((Guess[GChar]) == MyHiddenWord[MHWChar]) { 
-				if (MHWChar == GChar) { //if the letters are in the same place
-					BullCowCount.Bulls++;
+{
+	MyCurrentTry++;
+	FBullCowCount BullCowCount;
+	int32 WordLength = MyHiddenWord.length(); // assuming same length as guess
+
+											  // loop through all letters in the hidden word
+	for (int32 MHWChar = 0; MHWChar < WordLength; MHWChar++) {
+		// compare letters against the guess
+		for (int32 GChar = 0; GChar < WordLength; GChar++) {
+			// if they match then
+			if (Guess[GChar] == MyHiddenWord[MHWChar]) {
+				if (MHWChar == GChar) { // if they're in the same place
+					BullCowCount.Bulls++; // incriment bulls
 				}
-				else { //if is not
-					BullCowCount.Cows++;
+				else {
+					BullCowCount.Cows++; // must be a cow
 				}
 			}
 		}
-	}	
-	if (BullCowCount.Bulls == GetHiddenWordLength()) {
-		bIsGameWon = true;
 	}
-	else {
-		bIsGameWon = false;
+	if (BullCowCount.Bulls == WordLength) {
+		bGameIsWon = true;
 	}
-	MyCurrentTry++; //if the player's guess is valid, the try counter will increase
+	else
+	{
+		bGameIsWon = false;
+	}
 	return BullCowCount;
 }
-bool FBullCowGame::IsIsogram(FString Word) const{
+
+bool FBullCowGame::IsIsogram(FString Word) const
+{
 	// treat 0 and 1 letter words as isograms
 	if (Word.length() <= 1) { return true; }
-	TMap<char, bool> LetterSeen; //setup our map
+	TMap<char, bool> LetterSeen; // setup our map
 	for (auto Letter : Word) 	// for all letters of the word
 	{
 		Letter = tolower(Letter); // handle mixed case
@@ -74,7 +87,7 @@ bool FBullCowGame::IsIsogram(FString Word) const{
 			return false; // we do NOT have an isogram			
 		}
 		else {
-			LetterSeen[Letter] = true; //add the letter to the map			
+			LetterSeen[Letter] = true;// add the letter to the map			
 		}
 	}
 	return true; // for example in cases where /0 is entered

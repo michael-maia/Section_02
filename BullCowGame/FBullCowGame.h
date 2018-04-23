@@ -1,38 +1,47 @@
-#pragma once //This makes the file to be imported only one time
+#pragma once
 #include <string>
 
 using FString = std::string;
 using int32 = int;
 
-struct FBullCowCount {
+// all values intialised to zero
+struct FBullCowCount
+{
 	int32 Bulls = 0;
 	int32 Cows = 0;
 };
 
-enum class EGuessStatus {
+
+enum class EGuessStatus
+{
 	Invalid_Status,
 	OK,
 	Not_Isogram,
-	Wrong_Length	
+	Wrong_Length,
+	Not_Lowercase
 };
 
-class FBullCowGame {
-public:		
-	FBullCowGame();
+
+class FBullCowGame
+{
+public:
+	FBullCowGame(); // constructor
+
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
-	int32 GetHiddenWordLength() const;	
+	int32 GetHiddenWordLength() const;
 	bool IsGameWon() const;
-	EGuessStatus CheckGuessValidity(FString) const; 
-	void Reset();		
-	FBullCowCount SubmitValidGuess(FString);
+	EGuessStatus CheckGuessValidity(FString) const;
 
-private: //private parameters, DON'T manipulate it directly, use functions instead a.k.a GETTERS
-	//Check constructor for inicialization
+	void Reset(); // TODO make a more rich return value.
+	FBullCowCount SubmitValidGuess(FString);	
+// ^^ Please try and ignore this and focus on the interface above ^^
+private:
+	// see constructor for initialisation
 	int32 MyCurrentTry;
-	int32 MyMaxTries;	
+	int32 MyMaxTries;
 	FString MyHiddenWord;
-	bool bIsGameWon;
+	bool bGameIsWon;
+
 	bool IsIsogram(FString) const;
 };
-
